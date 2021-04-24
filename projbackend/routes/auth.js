@@ -14,7 +14,7 @@ router.post("/signup",[
 signup
 );
 
-router.get("/signin", [
+router.post("/signin", [
     body("email","Email is required!!!").isEmail(),
     body("password","Password is required").isLength({min:1})
 ] ,signin);
