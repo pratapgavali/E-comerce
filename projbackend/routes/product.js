@@ -12,7 +12,7 @@ router.param("productId", getProductById);
 // all of actual routes
 
 // create routes
-router.post("/product/create/:userId", isSignedIn, isAdmin, isAuthenticated, createProduct);
+router.post("/product/create/:userId", isSignedIn, isAuthenticated, isAdmin, createProduct);
 
 // read routes
 router.get("/product/:productId", getProduct);

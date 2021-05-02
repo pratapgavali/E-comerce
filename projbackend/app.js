@@ -12,8 +12,8 @@ const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/order");
-
-
+const stripeRoutes = require("./routes/stripePayment")
+const paymentBRoutes = require("./routes/paymentBRoutes");
 
 // DB Connection
 mongoose.connect(process.env.DATABASE,{
@@ -36,6 +36,10 @@ app.use("/api",userRoutes);
 app.use("/api",categoryRoutes);
 app.use("/api",productRoutes);
 app.use("/api",orderRoutes);
+app.use("/api",stripeRoutes);
+app.use("/api",paymentBRoutes);
+
+
 
 
 // PORT

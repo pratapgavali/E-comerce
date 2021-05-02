@@ -24,27 +24,29 @@ const Signin = () => {
         setValues({...values, error: false, loading:true})
         signin({email, password})
         .then(data => {
-            if(data?.error){
-                setValues({...values, error: data?.error, loading:false})
+            if(data.error){
+                setValues({...values, error: data.error, loading:false})
             } else{
                 authenticate(data, ()=>{
                     setValues({
                         ...values,
-                        didRedirect: true
+                        email:"",
+                        password:"",
+                        didRedirect: true,
 
-                    });
-                });
+                    })
+                })
             }
         })
         .catch(console.log("Signin failed"))
-    };
+    }
 
     const performRedirect = () => {
         if(didRedirect){
             if(user && user.role === 1){
-                return<p>redirect to admin</p>
+                return <Redirect to="/admin/dashboard" />
             } else {
-                return <p>redirect to user dashboard</p>
+                return <Redirect to="/user/dashboard" />
             }
         }
 

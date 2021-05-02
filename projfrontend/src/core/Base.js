@@ -4,18 +4,20 @@ import Menu from './Menu'
      title="My description",
      description="My Description",
      className="bg-dark text-white p-4",
+     name,
      children
  }) => {
     return (
-        <div>
+        <div className="h-100" >
             <Menu />
             <div className="conatainer-fluid " >
-                <div className="jumbotron bg-dark text-white text-center" >
+                <div className="jumbotron bg-dark text-white text-center mb-0" >
 
-                    <h2 className="display-4" >{title}</h2>
+                    <h2 className="display-4" >{title} {name}</h2>
                     <p  className="lead" >{description}</p>
 
                 </div>
+                
                 <div className={className} > {children} </div>
             </div>
             

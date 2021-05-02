@@ -21,7 +21,7 @@ router.get("/categories", getAllCategory);
 
 // update
 
-router.put("/category/:categoryId/:userId", isSignedIn, isAdmin, isAuthenticated, updateCategory);
+router.put("/category/:categoryId/:userId", isSignedIn, isAuthenticated, isAdmin, updateCategory);
 
 // delete
 router.delete("/category/:categoryId/:userId", isSignedIn, isAdmin, isAuthenticated, removeCategory);

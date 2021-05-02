@@ -9,7 +9,7 @@ exports.getCategoryById = (req, res, next, id) =>{
             })
         }
 
-        req.Category = cate;
+        req.category = cate;
         next();
     });
 };
@@ -41,25 +41,23 @@ exports.getAllCategory = (req, res) =>{
             });
         }
 
-        res.json(items);
+        res.json(categories);
     })
 }
 
-exports.updateCategory = (req,res)=>{
+exports.updateCategory = (req, res) => {
+  const category = req.category;
+  category.name = req.body.name;
 
-    const category = req.Category;
-    category.name = req.body.name;
-
-    category.save((err, updatedCategory)=>{
-        if(err){
-            return res.status(400).json({
-                error: "Failed to update category"
-            })
-        }
-
-        res.json(updatedCategory);
-    })
-}
+  category.save((err, updatedCategory) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Failed to update category"
+      });
+    }
+    res.json(updatedCategory);
+  });
+};
 
 exports.removeCategory = (req,res)=>{
     const category = req.Category;

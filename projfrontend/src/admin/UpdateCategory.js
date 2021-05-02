@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { isAuthenticated } from '../auth/helper'
 import Base from '../core/Base'
-import { createCategory } from './helper/adminapicall'
+import { updateCategory, getCategory } from './helper/adminapicall'
 
 
-const AddCategory = () => {
+const UpdateCategory = ({match}) => {
 
     const [name, setName] = useState("")
     const [error, setError] = useState(false)
@@ -18,6 +18,21 @@ const AddCategory = () => {
             <Link className="btn btn-sm btn-success mb-3" to="/admin/dashboard" >Admin Home</Link>
         </div>
     )
+
+    const preload = categoryId =>{
+
+        getCategory(categoryId).then(data =>{
+            if(data.error){
+                console.log(data.error);
+            }else{
+                
+                setName(prevName => prevName = data.name)
+                
+            }
+        })
+        
+
+    }
 
     const handleChange = (event) => {
         //
@@ -32,7 +47,7 @@ const AddCategory = () => {
         setSuccess(false)
 
         // backend request 
-        createCategory(user._id, token, {name})
+        updateCategory( match.params.categoryId, user._id, token, name)
             .then(data => {
                 if(data.error){
                     setError(true)
@@ -43,6 +58,12 @@ const AddCategory = () => {
                 }
             })
     }
+
+    useEffect(() => {
+        
+        preload(match.params.categoryId);
+    
+    }, [])
 
     const successMessage = () => {
         if(success){
@@ -62,7 +83,7 @@ const AddCategory = () => {
             <div className="from-group" >
                 <p className="lead" > Enter the category </p>
                 <input type="text" className="form-control my-3" onChange={handleChange} value={name} autoFocus required placeholder="For Ex. Summer" />
-                <button className="btn btn-outline-info" onClick={onSubmit}  >Create Category</button>
+                <button className="btn btn-outline-info" onClick={onSubmit}  >Update Category</button>
             </div>
         </form>
     )
@@ -83,4 +104,4 @@ const AddCategory = () => {
 }
 
 
-export default AddCategory;
+export default UpdateCategory;

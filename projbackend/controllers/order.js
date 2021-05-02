@@ -16,18 +16,30 @@ exports.getOrderById = (req, res, next, id)=>{
     })
 }
 
-exports.createOrder = (req, res)=>{
+exports.createOrder = (req, res) => {
+    try{
+    
     req.body.order.user = req.profile;
+      console.log(req.body.order)
+  
     const order = new Order(req.body.order);
-    order.save((err, order)=>{
-        if(err){
-            return res.status(400).json({
-                error: "failed to save in DB"
-            });
-        }
-        res.json(order);
-    })
-}
+    console.log(order)
+    order.save((err, order) => {
+    console.log(err)
+  
+      if (err || !order) {
+        return res.status(400).json({
+          error: "Failed to save your order in DB"
+        });
+      }
+      res.json(order);
+    });
+    }
+    
+    catch(err){
+    console.log(err)
+    }
+  };
 
 exports.getAllOrders = (req, res) => {
     Order.find()

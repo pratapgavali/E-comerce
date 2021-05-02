@@ -1,42 +1,40 @@
 const mongoose = require("mongoose");
-const {ObjectId} = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
-const productCartSchema = new mongoose.Schema({
-
-    product:{
-        type: ObjectId,
-        ref: "Product"
-    },
-    name: String,
-    count: Number,
-    price: Number
-    
+const ProductCartSchema = new mongoose.Schema({
+  product: {
+    type: ObjectId,
+    ref: "Product"
+  },
+  name: String,
+  count: Number,
+  price: Number
 });
 
-const ProductCart = mongoose.model("ProductCart",productCartSchema);
 
-const orderSchema = new mongoose.Schema({
-
-    products: [productCartSchema],
-    transactionId: {},
+const OrderSchema = new mongoose.Schema(
+  {
+    products: [ProductCartSchema],
+    transaction_id: {},
     amount: { type: Number },
     address: String,
-    status:{
-        type: String,
-        default:"Received",
-        enum: ["Cancelled", "Delivered", "Shipped", "Processing", "Received"]
+    status: {
+      type: String,
+      default: "Recieved",
+      enum: ["Cancelled", "Delivered", "Shipped", "Processing", "Recieved"]
     },
     updated: Date,
-
-    user:{
-        type: ObjectId,
-        ref: "User"
+    user: {
+      type: ObjectId,
+      ref: "User"
     }
-
-},
- {timestamps:true}
+  },
+  { timestamps: true }
 );
 
-const Order = mongoose.model("Order",orderSchema);
+const ProductCart = mongoose.model("ProductCart", ProductCartSchema);
+const Order = mongoose.model("Order", OrderSchema);
 
-module.exports = {ProductCart,Order};
+module.exports = ProductCart;
+module.exports = Order;
+
